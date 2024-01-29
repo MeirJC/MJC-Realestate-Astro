@@ -1,16 +1,42 @@
 ---
+import '../styles/global.css';
+import BlockRenderer from '../components/BlockRenderer.astro';
 
+const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
+  method: 'POST',
+  headers: {
+    'content-type': 'application/json',
+  },
+  body: JSON.stringify({
+    query: `query PageQuery {
+      cssVariables
+      nodeByUri(uri: "/") {
+        id
+        ... on Page {
+          id
+          blocks
+        }
+      }
+    }`,
+  }),
+});
+const { data } = await response.json();
+const blocks = data?.nodeByUri?.blocks || [];
+// console.log(blocks);
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+    {!!data.cssVariables && <style set:html={`:root{${data.cssVariables}}`} />}
+  </head>
+  <body>
+    <!-- <h1>Astro</h1>
+    <p class="text-blue-500 font-bold">Tailwind Test</p> -->
+    <BlockRenderer {blocks} />
+  </body>
 </html>

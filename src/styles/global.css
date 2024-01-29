@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+base - foundational styles and a CSS reset for standardizing default styling across browsers
+components - defining custom, reusable CSS classes for specific components
+utilities -  single-purpose utility classes 
+*/
