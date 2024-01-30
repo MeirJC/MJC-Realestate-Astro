@@ -32,6 +32,10 @@ export async function getStaticPaths() {
     params: {
       slug: page.uri === "/" ? undefined : page.uri,
     },
+    props: {
+      seo: page.seo,
+      blocks: page.blocks,
+    },
   }));
 }
 const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
@@ -40,8 +44,8 @@ const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
     "content-type": "application/json",
   },
   body: JSON.stringify({
-    query: `query PageQuery {
-      nodeByUri(uri: "/") {
+    query: `query PageQuery($uri: String!) {
+      nodeByUri(uri: $uri) {
     id
     ... on Page {
       id
@@ -53,12 +57,17 @@ const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
     }
   }
     }`,
+    variables: {
+      uri: (Astro.params as any).slug || "/",
+    },
   }),
 });
 
 const { data } = await response.json();
 const blocks = data?.nodeByUri?.blocks || [];
+// const { blocks, seo } = Astro.props;
 const seo = data?.nodeByUri?.seo;
+// const seo = data?.nodeByUri?.seo;
 ---
 
 <html lang="en">

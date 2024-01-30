@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
 /* 
 base - foundational styles and a CSS reset for standardizing default styling across browsers
 components - defining custom, reusable CSS classes for specific components

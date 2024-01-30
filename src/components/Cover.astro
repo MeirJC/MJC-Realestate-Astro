@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+import { joinClasses } from "../utils/joinClasses";
+type Props = {
+  classes: string;
+  styles: string;
+  url?: string;
+  height?: number;
+  width?: number;
+};
+const { classes, styles, url, height, width } = Astro.props;
+---
+
+<div class={joinClasses(classes, "relative")} } style={styles}>
+  {
+    !!url && (
+      <Image
+        src={url}
+        height={height || 1080}
+        width={width || 1920}
+        alt="MJC realestate cover"
+        class="absolute w-full object-cover h-full !max-w-full"
+      />
+    )
+  }
+  <div class="z-10 relative">
+    <slot />
+  </div>
+</div>
