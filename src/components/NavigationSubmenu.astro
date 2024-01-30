@@ -12,7 +12,6 @@ type Props = {
 const { classes, styles, label, url } = Astro.props;
 const href = replaceUrl(url, Astro.url.host);
 const allClasses = joinClasses(classes, "group relative");
-// console.log(Astro.url);
 ---
 
 <li class={allClasses} style={styles}>

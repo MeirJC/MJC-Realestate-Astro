@@ -59,14 +59,11 @@ const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
 const { data } = await response.json();
 const blocks = data?.nodeByUri?.blocks || [];
 const seo = data?.nodeByUri?.seo;
-// console.log(data);
 ---
 
 <html lang="en">
   <CommonHead title={seo.title || ""} description={seo.metaDesc || ""} />
   <body>
-    <!-- <h1>Astro</h1>
-    <p class="text-blue-500 font-bold">Tailwind Test</p> -->
     <BlockRenderer {blocks} />
   </body>
 </html>
