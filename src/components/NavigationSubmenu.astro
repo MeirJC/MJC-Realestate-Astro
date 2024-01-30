@@ -1,0 +1,25 @@
+---
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { joinClasses } from "../utils/joinClasses";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+type Props = {
+  classes: string;
+  styles: string;
+  label: string;
+  url: string;
+};
+const { classes, styles, label, url } = Astro.props;
+
+const allClasses = joinClasses(classes, "group relative");
+---
+
+<li class={allClasses} style={styles}>
+  <a href={url}>
+    {label}<FontAwesomeIcon icon={faChevronDown} className="text-xs pl-1" /></a
+  >
+  <ul
+    class="hidden group-hover:block absolute top-full right-0 text-right whitespace-nowrap bg-event-horizon py-2 [&_a]:px-4 [&_a]:py-2 [&_a]:block"
+  >
+    <slot />
+  </ul>
+</li>
