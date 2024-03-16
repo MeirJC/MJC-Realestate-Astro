@@ -1,13 +1,13 @@
 ---
-import BlockRenderer from "../components/BlockRenderer.astro";
-import type { Block } from "@wp-block-tools/styles";
-import CommonHead from "../components/CommonHead.astro";
+import BlockRenderer from '../components/BlockRenderer.astro';
+import type { Block } from '@wp-block-tools/styles';
+import CommonHead from '../components/CommonHead.astro';
 
 export async function getStaticPaths() {
   const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "content-type": "application/json",
+      'content-type': 'application/json',
     },
     body: JSON.stringify({
       query: `
@@ -27,10 +27,10 @@ export async function getStaticPaths() {
     }),
   });
   const { data } = await response.json();
-  console.log("DATA!!!:\n", data?.pages?.nodes);
+  // console.log("DATA!!!:\n", data?.pages?.nodes);
   return data.pages.nodes.map((page: any) => ({
     params: {
-      slug: page.uri === "/" ? undefined : page.uri,
+      slug: page.uri === '/' ? undefined : page.uri,
     },
     props: {
       seo: page.seo,
@@ -39,9 +39,9 @@ export async function getStaticPaths() {
   }));
 }
 const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
-  method: "POST",
+  method: 'POST',
   headers: {
-    "content-type": "application/json",
+    'content-type': 'application/json',
   },
   body: JSON.stringify({
     query: `query PageQuery($uri: String!) {
@@ -58,7 +58,7 @@ const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
   }
     }`,
     variables: {
-      uri: (Astro.params as any).slug || "/",
+      uri: (Astro.params as any).slug || '/',
     },
   }),
 });
@@ -71,7 +71,7 @@ const seo = data?.nodeByUri?.seo;
 ---
 
 <html lang="en">
-  <CommonHead title={seo.title || ""} description={seo.metaDesc || ""} />
+  <CommonHead title={seo.title || ''} description={seo.metaDesc || ''} />
   <body>
     <BlockRenderer {blocks} />
   </body>

@@ -1,0 +1,54 @@
+---
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faFacebook,
+  faXTwitter,
+  faInstagram,
+  faYoutube,
+  faGithub,
+} from '@fortawesome/free-brands-svg-icons';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+
+type Props = {
+  classes: string;
+  styles: string;
+  service: string;
+  url: string;
+};
+
+interface IconTypeMap {
+  facebook: IconDefinition;
+  youtube: IconDefinition;
+  instagram: IconDefinition;
+  x: IconDefinition;
+  github: IconDefinition;
+}
+
+const { classes, styles, service, url } = Astro.props;
+
+const iconType: IconTypeMap = {
+  facebook: faFacebook,
+  youtube: faYoutube,
+  instagram: faInstagram,
+  x: faXTwitter,
+  github: faGithub,
+};
+
+const iconStyles = {
+  facebook: 'hover:text-blue-500',
+  youtube: 'hover:text-red-500',
+  instagram: 'hover:text-pink-500',
+  x: 'hover:text-sky-500',
+  github: 'hover:text-violet-500',
+};
+---
+
+{
+  !!iconType[service] && (
+    <div class={classes} style={styles}>
+      <a href={url} class={`text-3xl transition-colors ${iconStyles[service]}`}>
+        <FontAwesomeIcon icon={iconType[service]} />
+      </a>
+    </div>
+  )
+}

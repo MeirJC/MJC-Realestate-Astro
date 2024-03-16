@@ -1,8 +1,8 @@
 ---
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { joinClasses } from "../utils/joinClasses";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { replaceUrl } from "../utils/replaceUrl";
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { joinClasses } from '../utils/joinClasses';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { replaceUrl } from '../utils/replaceUrl';
 type Props = {
   classes: string;
   styles: string;
@@ -11,7 +11,7 @@ type Props = {
 };
 const { classes, styles, label, url } = Astro.props;
 const href = replaceUrl(url, Astro.url.host);
-const allClasses = joinClasses(classes, "group relative");
+const allClasses = joinClasses(classes, 'group relative');
 ---
 
 <li class={allClasses} style={styles}>
@@ -19,7 +19,7 @@ const allClasses = joinClasses(classes, "group relative");
     {label}<FontAwesomeIcon icon={faChevronDown} className="text-xs pl-1" /></a
   >
   <ul
-    class="hidden group-hover:block absolute top-full right-0 text-right whitespace-nowrap bg-event-horizon py-2 [&_a]:px-4 [&_a]:py-2 [&_a]:block"
+    class="z-20 hidden group-hover:block absolute top-full right-0 text-right whitespace-nowrap bg-event-horizon py-2 [&_a]:px-4 [&_a]:py-2 [&_a]:block"
   >
     <slot />
   </ul>
