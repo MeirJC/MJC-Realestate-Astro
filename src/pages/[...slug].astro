@@ -22,13 +22,19 @@ export async function getStaticPaths() {
             }
           }
         }
-}
-`,
+        properties(first: 100) {
+          nodes {
+            uri
+            title
+          }
+        }
+      }
+  `,
     }),
   });
   const { data } = await response.json();
-  // console.log("DATA!!!:\n", data?.pages?.nodes);
-  return data.pages.nodes.map((page: any) => ({
+  // console.log('DATA!!!:\n', data?.pages?.nodes);
+  return [...data.pages.nodes, ...data.properties.nodes].map((page: any) => ({
     params: {
       slug: page.uri === '/' ? undefined : page.uri,
     },
@@ -47,7 +53,7 @@ const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
     query: `query PageQuery($uri: String!) {
       nodeByUri(uri: $uri) {
     id
-    ... on Page {
+    ... on ContentNode {
       id
       blocks
       seo {
@@ -65,9 +71,7 @@ const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
 
 const { data } = await response.json();
 const blocks = data?.nodeByUri?.blocks || [];
-// const { blocks, seo } = Astro.props;
 const seo = data?.nodeByUri?.seo;
-// const seo = data?.nodeByUri?.seo;
 ---
 
 <html lang="en">
